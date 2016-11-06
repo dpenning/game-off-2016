@@ -1,0 +1,118 @@
+/**
+ * colors from https://material.google.com/style/color.html#color-color-palette
+ */
+
+.Hexagon_container {
+  position: absolute;
+  width: 104px;
+  height: 102px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hexagon Outer */
+.Hexagon_outer {
+  width: 104px;
+  height: 60px;
+  position: relative;
+  background-color: #424242;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0px 0px 3px #aaa);
+  transition: .25s;
+}
+
+.Hexagon_outer:hover {
+  transform: scale(1.5);
+  filter: drop-shadow(0px 0px 10px #000);
+  z-index: 4;
+}
+
+.Hexagon_outer:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-bottom: 30px solid #424242;
+  border-left: 52px solid transparent;
+  border-right: 52px solid transparent;
+  position: absolute;
+  top: -30px;
+  z-index: 1;
+}
+.Hexagon_outer:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  bottom: -30px;
+  border-top: 30px solid #424242;
+  border-left: 52px solid transparent;
+  border-right: 52px solid transparent;
+  z-index: 1;
+}
+
+/* Hexagon Border */
+.Hexagon_border {
+  width: 96px;
+  height: 54px;
+  position: relative;
+  background-color: #F5F5F5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Hexagon_border:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-bottom: 27.7px solid #F5F5F5;
+  border-left: 48px solid transparent;
+  border-right: 48px solid transparent;
+  position: absolute;
+  top: -27.5px;
+  z-index: 2;
+}
+.Hexagon_border:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  bottom: -27.4px;
+  border-top: 27.7px solid #F5F5F5;
+  border-left: 48px solid transparent;
+  border-right: 48px solid transparent;
+  z-index: 2;
+}
+
+/* Hexagon Border */
+.Hexagon_inner {
+  width: 92px;
+  height: 52px;
+  position: relative;
+  background-color: #424242;
+  z-index: 3;
+}
+
+.Hexagon_inner:before {
+  content: " ";
+  width: 0;
+  height: 0;
+  border-bottom: 26.5px solid #424242;
+  border-left: 46px solid transparent;
+  border-right: 46px solid transparent;
+  position: absolute;
+  top: -26.5px;
+  z-index: 3;
+}
+.Hexagon_inner:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  bottom: -26.4px;
+  border-top: 26.5px solid #424242;
+  border-left: 46px solid transparent;
+  border-right: 46px solid transparent;
+  z-index: 3;
+}
