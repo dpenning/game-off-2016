@@ -1,6 +1,7 @@
 get all the node modules (should just need browserify and reactify) then run
 
 browserify -t reactify main.js -o bundle.js
+
 echo 'open file:///<path to game>/game-off-2016/Game/main.html' in your browser
 
 
