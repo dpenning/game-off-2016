@@ -4,11 +4,9 @@ const ReactDOM = require('react-dom');
 const GameMap = require('./ui/GameMap.react');
 
 ReactDOM.render(
-  React.createElement("div", {style: {margin: 30}}, 
-    React.createElement(GameMap, {
-      rows: 5, 
-      cols: 5}
-    )
+  React.createElement(GameMap, {
+    rows: 3, 
+    cols: 3}
   ),
   document.getElementById('content')
 );
@@ -17,11 +15,16 @@ ReactDOM.render(
 const React = require('react');
 const Hexagon = require('./Hexagon.react');
 
-const top_offset = 112;
-const left_offset = 100;
+const SQRT_3 = Math.sqrt(3);
 
-const hexagon_width = 112;
-const hexagon_height = 98;
+const hexagon_margins = 8;
+const hexagon_radius = 40;
+const hexagon_width_spacing = Math.abs(
+  Math.cos(Math.PI * 1 / 6) - Math.cos(Math.PI * 5 / 6)
+) * hexagon_radius + hexagon_margins;
+const hexagon_height_spacing = hexagon_width_spacing * SQRT_3 / 2;
+const top_offset = hexagon_width_spacing;
+const left_offset = hexagon_height_spacing;
 
 class GameMap extends React.Component {
   constructor(props) {
@@ -37,14 +40,24 @@ class GameMap extends React.Component {
       for (let y = 0; y < cols; y++) {
         hexagons.push(
           React.createElement(Hexagon, {
-            top: hexagon_height * y + top_offset, 
-            left: hexagon_width * x + left_offset + (y % 2 ? hexagon_width / 2 : 0)}
+            originY: hexagon_height_spacing * y + top_offset, 
+            originX: 
+              hexagon_width_spacing * x +
+              left_offset +
+              (y % 2 ? hexagon_width_spacing / 2 : 0), 
+            
+            color: 'black', 
+            borderColor: 'white', 
+            radius: hexagon_radius}
           )
         );
       }
     }
     return (
-      React.createElement("div", null, 
+      React.createElement("svg", {
+        width: "calc(100vw)", 
+        height: "calc(100vh)", 
+        overflow: "scroll"}, 
         hexagons
       )
     );
@@ -56,21 +69,67 @@ module.exports = GameMap;
 },{"./Hexagon.react":3,"react":173}],3:[function(require,module,exports){
 const React = require('react');
 
+const OUTER_SIZE = 4;
+const BORDER_SIZE = 6;
+
 class Hexagon extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  calcHexagonCoordinates(x, y, radius) {
+    let coords = "";
+
+    for(let i = 0; i < 6; i++) {
+      let rads = (i * Math.PI / 3) + Math.PI / 2;
+      coords +=
+        (Math.cos(rads) * radius + x).toString() + "," +
+        (Math.sin(rads) * radius + y).toString() + " ";
+    }
+
+    return coords;
+  }
+
+  calcHexagonOuterString() {
+    return this.calcHexagonCoordinates(
+      this.props.originX,
+      this.props.originY,
+      this.props.radius
+    );
+  }
+
+  calcHexagonBorderString() {
+    return this.calcHexagonCoordinates(
+      this.props.originX,
+      this.props.originY,
+      this.props.radius - OUTER_SIZE
+    );
+  }
+
+  calcHexagonInnerString() {
+    return this.calcHexagonCoordinates(
+      this.props.originX,
+      this.props.originY,
+      this.props.radius - BORDER_SIZE
+    );
+  }
+
+  // hexagons should be rendered inside an svg element
+  // (game map will be the base svg element)
   render() {
     return (
-      React.createElement("div", {
-        style: {top: this.props.top, left: this.props.left}, 
-        className: 'Hexagon_container'}, 
-        React.createElement("div", {className: 'Hexagon_outer'}, 
-          React.createElement("div", {className: 'Hexagon_border'}, 
-            React.createElement("div", {className: 'Hexagon_inner'}
-            )
-          )
+      React.createElement("g", {className: 'Hexagon_container'}, 
+        React.createElement("polygon", {
+          fill: this.props.color, 
+          points: this.calcHexagonOuterString()}
+        ), 
+        React.createElement("polygon", {
+          fill: this.props.borderColor, 
+          points: this.calcHexagonBorderString()}
+        ), 
+        React.createElement("polygon", {
+          fill: this.props.color, 
+          points: this.calcHexagonInnerString()}
         )
       )
     );

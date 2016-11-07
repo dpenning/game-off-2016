@@ -2,6 +2,18 @@ const {Record, List} = require('../extern/immutable.js');
 const Tile = require('./Tile');
 
 const playerColorPaletteList = [
+  { // non owner: Blue Grey
+    '50': '#ECEFF1',
+    '100': '#CFD8DC',
+    '200': '#B0BEC5',
+    '300': '#90A4AE',
+    '400': '#78909C',
+    '500': '#607D8B',
+    '600': '#546E7A',
+    '700': '#455A64',
+    '800': '#37474F',
+    '900': '#263238',
+  },
   { // amber
     '50': '#FFF8E1',
     '100': '#FFECB3',
@@ -38,7 +50,7 @@ const playerColorPaletteList = [
     '800': '#558B2F',
     '900': '#33691E',
   },
-  {
+  { // red
     '50': '#FFEBEE',
     '100': '#FFCDD2',
     '200': '#EF9A9A',
@@ -50,7 +62,7 @@ const playerColorPaletteList = [
     '800': '#C62828',
     '900': '#B71C1C',
   },
-  {
+  { // purple
     '50': '#F3E5F5',
     '100': '#E1BEE7',
     '200': '#CE93D8',
@@ -81,7 +93,7 @@ class GameState extends Record({
       for (let x = 0; x < rows; x++) {
         let col = new List();
         for (let y = 0; y < cols; y++) {
-          col = col.push(new Tile({owner: 0}));
+          col = col.push(new Tile({owner: null}));
         }
         map = map.push(col)
       }
