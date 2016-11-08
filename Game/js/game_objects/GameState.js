@@ -37,7 +37,7 @@ class GameState {
   }
 
   getCurrentPlayer() {
-    return this.currentPlayer;
+    return this.players[this.currentPlayer];
   }
 
   getPlayers() {

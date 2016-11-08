@@ -1,9 +1,9 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const GameMap = require('./ui/GameMap.react');
+const Game = require('./ui/Game.react');
 
 ReactDOM.render(
-  <GameMap
+  <Game
     rows={3}
     cols={3}
   />,

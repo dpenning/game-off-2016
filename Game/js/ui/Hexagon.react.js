@@ -9,8 +9,6 @@ class Hexagon extends React.Component {
   }
 
   _onClick() {
-    console.log('onClick');
-    console.log(this);
     this.props.onClick();
   }
 

@@ -1,6 +1,5 @@
 const React = require('react');
 const Hexagon = require('./Hexagon.react');
-const GameState = require('../game_objects/GameState');
 const Palette = require('../game_objects/Palette');
 
 const SQRT_3 = Math.sqrt(3);
@@ -15,23 +14,9 @@ const top_offset = hexagon_width_spacing;
 const left_offset = hexagon_height_spacing;
 
 class GameMap extends React.Component {
-  constructor(props) {
-    super(props);
-    const game = GameState.createNewGame(2, this.props.rows, this.props.cols);
-    this.state = {
-      game,
-    };
-  }
-
-  _takeTurn(x, y) {
-    this.setState({
-      game: this.state.game.takeTurn(x, y),
-    });
-  }
-
   render() {
     // for each row add a hexagon
-    const map = this.state.game.getMap();
+    const map = this.props.game.getMap();
     let hexagons = [];
     map.forEach((row, x) => {
       row.forEach((tile, y) => {
@@ -49,7 +34,7 @@ class GameMap extends React.Component {
             color={colorPalette['500']}
             borderColor={colorPalette['50']}
             radius={hexagon_radius}
-            onClick={() => this._takeTurn(x, y)}
+            onClick={() => this.props.onTakeTurn(x, y)}
           />
         );
       });
