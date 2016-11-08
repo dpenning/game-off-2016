@@ -1,5 +1,7 @@
 const React = require('react');
 const Hexagon = require('./Hexagon.react');
+const GameState = require('../game_objects/GameState');
+const Palette = require('../game_objects/Palette');
 
 const SQRT_3 = Math.sqrt(3);
 
@@ -15,30 +17,43 @@ const left_offset = hexagon_height_spacing;
 class GameMap extends React.Component {
   constructor(props) {
     super(props);
+    const game = GameState.createNewGame(2, this.props.rows, this.props.cols);
+    this.state = {
+      game,
+    };
+  }
+
+  _takeTurn(x, y) {
+    this.setState({
+      game: this.state.game.takeTurn(x, y),
+    });
   }
 
   render() {
     // for each row add a hexagon
-    const rows = this.props.rows;
-    const cols = this.props.cols;
+    const map = this.state.game.getMap();
     let hexagons = [];
-    for (let x = 0; x < rows; x++) {
-      for (let y = 0; y < cols; y++) {
+    map.forEach((row, x) => {
+      row.forEach((tile, y) => {
+        const ownerID = tile.getOwnerID();
+        const colorPalette = Palette.getPlayerColorPalette(ownerID);
         hexagons.push(
           <Hexagon
+            key={x.toString() + "," + y.toString()}
             originY={hexagon_height_spacing * y + top_offset}
             originX={
               hexagon_width_spacing * x +
               left_offset +
               (y % 2 ? hexagon_width_spacing / 2 : 0)
             }
-            color={'black'}
-            borderColor={'white'}
+            color={colorPalette['500']}
+            borderColor={colorPalette['50']}
             radius={hexagon_radius}
+            onClick={() => this._takeTurn(x, y)}
           />
         );
-      }
-    }
+      });
+    });
     return (
       <svg
         width="calc(100vw)"

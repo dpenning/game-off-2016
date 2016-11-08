@@ -1,3 +1,8 @@
+#ignore the bundle as well at least until finished with the project
+*.bundle.js
+
+## node gitignore
+
 # Logs
 logs
 *.log

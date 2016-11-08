@@ -1,22 +1,30 @@
-const {Record, List} = require('../extern/immutable.js');
+const {Record} = require('../extern/immutable.js');
 
-class Tile extends Record({
-  owner: -1,
+class Tile {
+  constructor(ownerID) {
+    this.ownerID = ownerID;
+  }
 
-}) {
   ///////////////////////////     getters     //////////////////////////////////
   getOwnerID() {
-    return this.owner;
+    return this.ownerID;
   }
 
   ///////////////////////////     setters     //////////////////////////////////
-  setOwnerID(id) {
-    return new this({owner: id});
+  setOwnerID(ownerID) {
+    this.ownerID = ownerID;
+    return this;
   }
 
   ///////////////////////////      other      //////////////////////////////////
   hasOwner() {
-    return this.owner > -1;
+    return this.ownerID !== null;
+  }
+
+  getConfig() {
+    return {
+      owner: this.owner
+    }
   }
 };
 

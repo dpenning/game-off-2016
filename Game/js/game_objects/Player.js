@@ -1,0 +1,19 @@
+class Player {
+  constructor(id) {
+    this.id = id;
+  }
+
+  ///////////////////////////     getters     //////////////////////////////////
+  getID() {
+    return this.id;
+  }
+
+  ///////////////////////////     setters     //////////////////////////////////
+
+  ///////////////////////      turn functions      /////////////////////////////
+  getConfig() {
+    return {id: this.id};
+  }
+}
+
+module.exports = Player;

@@ -8,6 +8,12 @@ class Hexagon extends React.Component {
     super(props);
   }
 
+  _onClick() {
+    console.log('onClick');
+    console.log(this);
+    this.props.onClick();
+  }
+
   calcHexagonCoordinates(x, y, radius) {
     let coords = "";
 
@@ -52,15 +58,18 @@ class Hexagon extends React.Component {
       <g className={'Hexagon_container'}>
         <polygon
           fill={this.props.color}
-          points={this.calcHexagonOuterString()}>
+          points={this.calcHexagonOuterString()}
+          onClick={() => this._onClick()}>
         </polygon>
         <polygon
           fill={this.props.borderColor}
-          points={this.calcHexagonBorderString()}>
+          points={this.calcHexagonBorderString()}
+          onClick={() => this._onClick()}>
         </polygon>
         <polygon
           fill={this.props.color}
-          points={this.calcHexagonInnerString()}>
+          points={this.calcHexagonInnerString()}
+          onClick={() => this._onClick()}>
         </polygon>
       </g>
     );
