@@ -13,7 +13,6 @@ class Game extends React.Component {
   }
 
   _takeTurn(x, y) {
-    console.log(this.state);
     this.setState({
       game: this.state.game.takeTurn(x, y),
     });
