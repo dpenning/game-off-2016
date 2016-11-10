@@ -2,6 +2,7 @@ const React = require('react');
 const GameMap = require('./GameMap.react');
 const GameState = require('../game_objects/GameState');
 const ActionBar = require('./ActionBar.react');
+const TileTypes = require('../game_objects/tiles/TileTypes');
 
 class Game extends React.Component {
   constructor(props) {
@@ -14,7 +15,10 @@ class Game extends React.Component {
 
   _takeTurn(x, y) {
     this.setState({
-      game: this.state.game.takeTurn(x, y),
+      game: this.state.game.takeTurn(
+        x, y,
+        new TileTypes.Home(this.state.game.getCurrentPlayer().getID())
+      ),
     });
   }
 

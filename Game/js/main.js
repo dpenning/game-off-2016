@@ -4,8 +4,8 @@ const Game = require('./ui/Game.react');
 
 ReactDOM.render(
   <Game
-    rows={3}
-    cols={3}
+    rows={2}
+    cols={2}
   />,
   document.getElementById('content')
 );

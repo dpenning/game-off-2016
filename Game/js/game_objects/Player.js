@@ -1,6 +1,7 @@
 class Player {
-  constructor(id) {
+  constructor(id, alive) {
     this.id = id;
+    this.alive = alive
   }
 
   ///////////////////////////     getters     //////////////////////////////////
@@ -8,11 +9,22 @@ class Player {
     return this.id;
   }
 
+  isAlive() {
+    return this.alive;
+  }
+
   ///////////////////////////     setters     //////////////////////////////////
+  setAlive(alive) {
+    this.alive = alive;
+    return this;
+  }
 
   ///////////////////////      turn functions      /////////////////////////////
   getConfig() {
-    return {id: this.id};
+    return {
+      id: this.id,
+      alive: this.alive,
+    };
   }
 }
 

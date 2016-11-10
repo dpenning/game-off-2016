@@ -3,6 +3,7 @@ const Hexagon = require('./Hexagon.react');
 const Palette = require('../game_objects/Palette');
 
 const SQRT_3 = Math.sqrt(3);
+const IMAGE_SIZE = 50;
 
 const hexagon_margins = 8;
 const hexagon_radius = 40;
@@ -40,8 +41,16 @@ class GameMap extends React.Component {
             color={colorPalette['500']}
             borderColor={colorPalette['50']}
             radius={hexagon_radius}
-            onClick={() => this.props.onTakeTurn(x, y)}
-          />
+            onClick={() => this.props.onTakeTurn(x, y)}>
+            <image
+              onClick={() => this.props.onTakeTurn(x, y)}
+              href={tile.getImageURI()}
+              x={originX - IMAGE_SIZE / 2}
+              y={originY - IMAGE_SIZE / 2}
+              height={IMAGE_SIZE}
+              width={IMAGE_SIZE}
+            />
+          </Hexagon>
         );
 
         svg_width = Math.max(svg_width, originX);

@@ -69,6 +69,7 @@ class Hexagon extends React.Component {
           points={this.calcHexagonInnerString()}
           onClick={() => this._onClick()}>
         </polygon>
+        {this.props.children}
       </g>
     );
   }
