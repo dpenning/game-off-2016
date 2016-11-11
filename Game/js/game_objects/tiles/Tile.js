@@ -41,7 +41,7 @@ class Tile {
   getConfig() {
     return {
       ownerURI: this.getOwnerID(),
-      name: this.getName(),
+      name: this.getType(),
       imageURI: this.getImageURI(),
     }
   }
@@ -51,11 +51,11 @@ class Tile {
   _childValidateTurn(player, x, y, gameMap) {return true;}
 
   isValidTurn(player, x, y, gameMap) {
-    if (x >= gameMap.length() || x < 0) {
+    if (x >= gameMap.length || x < 0) {
       return false;
     }
-    row = gameMap[x];
-    if (y >= row.length() || y < 0) {
+    const row = gameMap[x];
+    if (y >= row.length || y < 0) {
       return false;
     }
     return this._childValidateTurn(player, x, y, gameMap);

@@ -38,8 +38,9 @@ class GameMap extends React.Component {
             key={x.toString() + "," + y.toString()}
             originY={originY}
             originX={originX}
+            outerColor={colorPalette['700']}
+            borderColor={colorPalette['600']}
             color={colorPalette['500']}
-            borderColor={colorPalette['50']}
             radius={hexagon_radius}
             onClick={() => this.props.onTakeTurn(x, y)}>
             <image

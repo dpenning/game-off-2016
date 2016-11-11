@@ -14,12 +14,17 @@ class Game extends React.Component {
   }
 
   _takeTurn(x, y) {
-    this.setState({
-      game: this.state.game.takeTurn(
-        x, y,
-        new TileTypes.Home(this.state.game.getCurrentPlayer().getID())
-      ),
-    });
+    const tileToPlay = new TileTypes.Worm(
+      this.state.game.getCurrentPlayer().getID()
+    );
+    if (this.state.game.isValidTurn(x, y, tileToPlay)) {
+      this.setState({
+        game: this.state.game.takeTurn(
+          x, y,
+          tileToPlay
+        ),
+      });
+    }
   }
 
   render() {

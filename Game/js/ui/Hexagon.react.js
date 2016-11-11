@@ -55,7 +55,7 @@ class Hexagon extends React.Component {
     return (
       <g className={'Hexagon_container'}>
         <polygon
-          fill={this.props.color}
+          fill={this.props.outerColor}
           points={this.calcHexagonOuterString()}
           onClick={() => this._onClick()}>
         </polygon>

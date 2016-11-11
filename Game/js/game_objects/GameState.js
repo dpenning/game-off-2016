@@ -2,11 +2,11 @@ const TileTypes = require('./tiles/TileTypes');
 const Player = require('./Player');
 
 class GameState {
-  constructor(gameMap, players, turn, currentPlayer) {
+  constructor(gameMap, players, turn, currentPlayerID) {
     this.gameMap = gameMap;
     this.players = players;
     this.turn = turn;
-    this.currentPlayer = currentPlayer;
+    this.currentPlayerID = currentPlayerID;
   }
 
   static createNewGame(playerCount, rows, cols) {
@@ -24,6 +24,10 @@ class GameState {
       players.push(new Player(p, true));
     }
 
+    // set the 2 players bases at the
+    map[0][0] = new TileTypes.Home(0);
+    map[rows - 1][cols - 1] = new TileTypes.Home(1);
+
     return new GameState(map, players, 0, 0);
   }
 
@@ -37,7 +41,7 @@ class GameState {
   }
 
   getCurrentPlayer() {
-    return this.players[this.currentPlayer];
+    return this.players[this.currentPlayerID];
   }
 
   getPlayers() {
@@ -58,12 +62,16 @@ class GameState {
   increaseTurn() {
     this.turn += 1;
     do {
-      this.currentPlayer = (this.currentPlayer + 1) % this.players.length;
+      this.currentPlayerID = (this.currentPlayerID + 1) % this.players.length;
     } while (!this.getCurrentPlayer().isAlive())
     return this;
   }
 
 /////////////////////////////      other      //////////////////////////////////
+  isValidTurn(x, y, tile) {
+    return tile.isValidTurn(this.getCurrentPlayer(), x, y, this.getMap());
+  }
+
   isValidTurn(x, y, tile) {
     return tile.isValidTurn(this.getCurrentPlayer(), x, y, this.getMap());
   }
