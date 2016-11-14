@@ -17,7 +17,9 @@ class WormTile extends Tile {
     const hasAdjacentUserTile = adjacentPositions.filter((position) =>
       position.x < gameMap.length && position.x >= 0 &&
       position.y < gameMap[x].length && position.y >= 0 &&
-      gameMap[position.x][position.y].getOwnerID() == player.getID()
+      gameMap[position.x][position.y].getOwnerID() == player.getID() &&
+      (gameMap[position.x][position.y].getType() == 'Worm' ||
+      gameMap[position.x][position.y].getType() == 'Home')
     ).length > 0;
     return (
       hasAdjacentUserTile &&

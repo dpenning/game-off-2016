@@ -1,5 +1,6 @@
 const React = require('react');
 const Palette = require('../game_objects/Palette');
+const Hand = require('./hand.react');
 
 class ActionBar extends React.Component {
   render() {
@@ -22,6 +23,13 @@ class ActionBar extends React.Component {
     return (
       <div style={containerStyle}>
         {playerName}
+        <Hand
+          game={this.props.game}
+          selectedTile={this.props.selectedTile}
+          onSelectTileType={
+            (tileType) => this.props.onSelectTileType(tileType)
+          }
+        />
       </div>
     );
   }
@@ -44,6 +52,8 @@ const containerDefaultStyle = {
   height: '100px',
   backgroundColor: 'white',
   display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 }
 
 module.exports = ActionBar;

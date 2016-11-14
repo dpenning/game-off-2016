@@ -2,46 +2,58 @@ const React = require('react');
 const Hexagon = require('./Hexagon.react');
 const Palette = require('../game_objects/Palette');
 
-const SQRT_3 = Math.sqrt(3);
-const IMAGE_SIZE = 50;
+const {
+  HEXAGON_MARGINS,
+  HEXAGON_RADIUS,
+  HEXAGON_WIDTH_SPACING,
+  HEXAGON_HEIGHT_SPACING,
+  TOP_OFFSET,
+  LEFT_OFFSET,
+  IMAGE_SIZE,
+} = require('../game_objects/HexagonConsts');
 
-const hexagon_margins = 8;
-const hexagon_radius = 40;
-const hexagon_width_spacing = Math.abs(
-  Math.cos(Math.PI * 1 / 6) - Math.cos(Math.PI * 5 / 6)
-) * hexagon_radius + hexagon_margins;
-const hexagon_height_spacing = hexagon_width_spacing * SQRT_3 / 2;
-const top_offset = hexagon_radius;
-const left_offset = hexagon_radius;
+
+const VALID_MOVE_OVERLAY_OUTER = '#00CC00';
+const VALID_MOVE_OVERLAY_BORDER = '#00AA00';
+
+
 
 class GameMap extends React.Component {
   render() {
+    const player = this.props.game.getCurrentPlayer();
+    const currentPlayerColorPalette =
+      Palette.getPlayerColorPalette(player.getID());
+    const selectedTile = this.props.selectedTile;
+
     let svg_width = 0;
     let svg_height = 0;
 
     // for each row add a hexagon
     const map = this.props.game.getMap();
     let hexagons = [];
+
     map.forEach((row, x) => {
       row.forEach((tile, y) => {
         const ownerID = tile.getOwnerID();
         const colorPalette = Palette.getPlayerColorPalette(ownerID);
 
         const originX =
-          hexagon_width_spacing * x +
-          left_offset +
-          (y % 2 ? hexagon_width_spacing / 2 : 0);
-        const originY = hexagon_height_spacing * y + top_offset;
+          HEXAGON_WIDTH_SPACING * x +
+          LEFT_OFFSET +
+          (y % 2 ? HEXAGON_WIDTH_SPACING / 2 : 0);
+        const originY = HEXAGON_HEIGHT_SPACING * y + TOP_OFFSET;
+
+        const isValidTurn = selectedTile.isValidTurn(player, x, y, map);
 
         hexagons.push(
           <Hexagon
             key={x.toString() + "," + y.toString()}
             originY={originY}
             originX={originX}
-            outerColor={colorPalette['700']}
-            borderColor={colorPalette['600']}
+            outerColor={isValidTurn ? VALID_MOVE_OVERLAY_OUTER : colorPalette['700']}
+            borderColor={isValidTurn ? VALID_MOVE_OVERLAY_BORDER : colorPalette['600']}
             color={colorPalette['500']}
-            radius={hexagon_radius}
+            radius={HEXAGON_RADIUS}
             onClick={() => this.props.onTakeTurn(x, y)}>
             <image
               onClick={() => this.props.onTakeTurn(x, y)}
@@ -65,10 +77,12 @@ class GameMap extends React.Component {
         height: '100vh',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: currentPlayerColorPalette['100'],
+        transition: '1s',
       }}>
         <svg
-          width={svg_width + hexagon_radius}
-          height={svg_height + hexagon_radius}>
+          width={svg_width + HEXAGON_RADIUS}
+          height={svg_height + HEXAGON_RADIUS}>
           {hexagons}
         </svg>
       </div>
